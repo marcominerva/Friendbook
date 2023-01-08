@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Friendbook.BusinessLayer;
 using Friendbook.BusinessLayer.Profiles;
+using Friendbook.BusinessLayer.Resources;
 using Friendbook.DataAccessLayer;
 using Friendbook.Validations;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -51,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddRequestLocalization("en", "it");
 
-builder.Services.AddOperationResult();
+builder.Services.AddOperationResult((ModelState) => Messages.ValidationErrors);
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();

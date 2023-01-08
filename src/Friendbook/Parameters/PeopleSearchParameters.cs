@@ -20,5 +20,5 @@ public class PeopleSearchParameters
     public int ItemsPerPage { get; set; } = 50;
 
     [FromQuery(Name = "orderBy")]
-    public string OrderBy { get; set; } = "FirstName ASC, LastName, ASC";
+    public string OrderBy { get; set; } = "FirstName ASC, LastName ASC";
 }

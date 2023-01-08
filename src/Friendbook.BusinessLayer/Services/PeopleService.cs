@@ -2,6 +2,7 @@
 using System.Linq.Dynamic.Core.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Friendbook.BusinessLayer.Resources;
 using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
 using Friendbook.Shared.Models;
@@ -44,8 +45,8 @@ internal class PeopleService : IPeopleService
             }
             catch (ParseException ex)
             {
-                logger.LogError(ex, "Unexpected error while trying to order by {OrderByColumn}", orderBy);
-                return Result.Fail(FailureReasons.ClientError, $"Unable to order by column '{orderBy}'");
+                logger.LogError(ex, Messages.UnexpectedOrderByErrorMessage, orderBy);
+                return Result.Fail(FailureReasons.ClientError, string.Format(Messages.UnableToSort, orderBy));
             }
         }
 
@@ -63,7 +64,9 @@ internal class PeopleService : IPeopleService
     {
         var dbPerson = await dbContext.GetData<Entities.Person>().FirstOrDefaultAsync(p => p.Id == id);
         if (dbPerson is null)
+        {
             return Result.Fail(FailureReasons.ItemNotFound);
+        }
 
         var person = mapper.Map<Person>(dbPerson);
         return person;
@@ -72,18 +75,18 @@ internal class PeopleService : IPeopleService
     public async Task<Result<Person>> InsertAsync(SavePersonRequest request)
     {
         var samePersonExists = await dbContext.GetData<Entities.Person>()
-        .AnyAsync(p => p.FirstName == request.FirstName && p.LastName == request.LastName
-                && p.CreatedAt.AddMinutes(1) > DateTime.UtcNow);
+            .AnyAsync(p => p.FirstName == request.FirstName && p.LastName == request.LastName
+            && p.CreatedAt.AddMinutes(1) > DateTime.UtcNow);
 
         if (samePersonExists)
         {
             var validationErrors = new List<ValidationError>
-                {
-                    new("FirstName", "First name already in use"),
-                    new("LastName", "Last name already in use")
-                };
+            {
+                new(nameof(Person.FirstName), Messages.FirstNameInUse),
+                new(nameof(Person.LastName), Messages.LastNameInUse)
+            };
 
-            return Result.Fail(FailureReasons.ClientError, "Unable to create a person with same first name and last name within 1 minute", validationErrors);
+            return Result.Fail(FailureReasons.ClientError, Messages.UnableToCreatePersonWithinOneMinute, validationErrors);
         }
 
         var dbPerson = mapper.Map<Entities.Person>(request);
