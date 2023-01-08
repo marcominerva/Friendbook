@@ -33,6 +33,14 @@ namespace Friendbook.DataAccessLayer.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(30)

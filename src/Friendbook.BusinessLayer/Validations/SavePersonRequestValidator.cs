@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Friendbook.Shared.Models;
+using Friendbook.Shared.Models.Requests;
 
 namespace Friendbook.Validations;
 
-public class PersonValidator : AbstractValidator<Person>
+public class SavePersonRequestValidator : AbstractValidator<SavePersonRequest>
 {
-    public PersonValidator()
+    public SavePersonRequestValidator()
     {
         RuleFor(p => p.FirstName).NotEmpty().MaximumLength(30);
         RuleFor(p => p.LastName).NotEmpty().MaximumLength(30);
