@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddRequestLocalization("en", "it");
 
-builder.Services.AddOperationResult((ModelState) => Messages.ValidationErrors);
+builder.Services.AddOperationResult((state) => Messages.ValidationErrors);
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
