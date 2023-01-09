@@ -70,6 +70,15 @@ namespace Friendbook.BusinessLayer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The photo should have one of the following Content-Types: {1}.
+        /// </summary>
+        public static string InvalidContentType {
+            get {
+                return ResourceManager.GetString("InvalidContentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name is already in use.
         /// </summary>
         public static string LastNameInUse {

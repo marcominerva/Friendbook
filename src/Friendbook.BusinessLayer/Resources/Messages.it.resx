@@ -120,6 +120,9 @@
   <data name="FirstNameInUse" xml:space="preserve">
     <value>Nome già in uso</value>
   </data>
+  <data name="InvalidContentType" xml:space="preserve">
+    <value>La foto deve utilizzare uno dei seguenti Content-Types: {1}</value>
+  </data>
   <data name="LastNameInUse" xml:space="preserve">
     <value>Cognome già in uso</value>
   </data>

@@ -31,11 +31,7 @@ builder.Services.AddApplicationDbContext(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(PersonProfile).Assembly);
-builder.Services.AddFluentValidationAutoValidation(options =>
-{
-    options.DisableDataAnnotationsValidation = true;
-})
-.AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
+builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
