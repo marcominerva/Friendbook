@@ -94,7 +94,7 @@ internal class PeopleService : IPeopleService
 
         var dbPerson = mapper.Map<Entities.Person>(request);
         dbPerson.CreatedAt = DateTime.UtcNow;
-        dbPerson.CreatedBy = httpContextAccessor.HttpContext.User.Identity.Name;
+        dbPerson.CreatedBy = httpContextAccessor.HttpContext.User.Identity?.Name;
 
         dbContext.Insert(dbPerson);
 
