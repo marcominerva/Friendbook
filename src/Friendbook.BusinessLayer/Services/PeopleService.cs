@@ -7,6 +7,7 @@ using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
 using Friendbook.Shared.Models;
 using Friendbook.Shared.Models.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OperationResults;
@@ -19,12 +20,14 @@ internal class PeopleService : IPeopleService
 {
     private readonly IDbContext dbContext;
     private readonly IMapper mapper;
+    private readonly IHttpContextAccessor httpContextAccessor;
     private readonly ILogger<PeopleService> logger;
 
-    public PeopleService(IDbContext dbContext, IMapper mapper, ILogger<PeopleService> logger)
+    public PeopleService(IDbContext dbContext, IMapper mapper, IHttpContextAccessor httpContextAccessor, ILogger<PeopleService> logger)
     {
         this.dbContext = dbContext;
         this.mapper = mapper;
+        this.httpContextAccessor = httpContextAccessor;
         this.logger = logger;
     }
 
@@ -91,6 +94,7 @@ internal class PeopleService : IPeopleService
 
         var dbPerson = mapper.Map<Entities.Person>(request);
         dbPerson.CreatedAt = DateTime.UtcNow;
+        dbPerson.CreatedBy = httpContextAccessor.HttpContext.User.Identity.Name;
 
         dbContext.Insert(dbPerson);
 
