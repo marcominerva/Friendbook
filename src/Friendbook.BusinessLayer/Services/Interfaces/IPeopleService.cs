@@ -11,4 +11,8 @@ public interface IPeopleService
     Task<Result<Person>> GetAsync(Guid id);
 
     Task<Result<Person>> InsertAsync(SavePersonRequest request);
+
+    Task<Result> UpdateAsync(Guid id, SavePersonRequest request);
+
+    Task<Result> DeleteAsync(Guid id);
 }

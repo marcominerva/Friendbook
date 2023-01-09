@@ -99,4 +99,29 @@ internal class PeopleService : IPeopleService
         var person = mapper.Map<Person>(dbPerson);
         return person;
     }
+
+    public async Task<Result> UpdateAsync(Guid id, SavePersonRequest request)
+    {
+        var dbPerson = await dbContext.GetData<Entities.Person>(trackingChanges: true).FirstOrDefaultAsync(p => p.Id == id);
+        if (dbPerson is null)
+        {
+            return Result.Fail(FailureReasons.ItemNotFound);
+        }
+
+        mapper.Map(request, dbPerson);
+        await dbContext.SaveAsync();
+
+        return Result.Ok();
+    }
+
+    public async Task<Result> DeleteAsync(Guid id)
+    {
+        var affctedRows = await dbContext.GetData<Entities.Person>().Where(p => p.Id == id).ExecuteDeleteAsync();
+        if (affctedRows == 0)
+        {
+            return Result.Fail(FailureReasons.ItemNotFound);
+        }
+
+        return Result.Ok();
+    }
 }
