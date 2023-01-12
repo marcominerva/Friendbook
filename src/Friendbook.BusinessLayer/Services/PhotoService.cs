@@ -7,7 +7,7 @@ using Entities = Friendbook.DataAccessLayer.Entities;
 
 namespace Friendbook.BusinessLayer.Services;
 
-public class PhotoService : IPhotoService
+internal class PhotoService : IPhotoService
 {
     private readonly IDbContext dbContext;
 
