@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="OperationResultTools" Version="1.0.12" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.24" />
-    <PackageReference Include="TinyHelpers" Version="2.0.13" />
+    <PackageReference Include="TinyHelpers" Version="2.0.19" />
   </ItemGroup>
 
   <ItemGroup>

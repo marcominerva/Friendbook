@@ -5,6 +5,7 @@ using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.Parameters;
 using Friendbook.Shared.Models;
 using Friendbook.Shared.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OperationResults.AspNetCore;
 using TinyHelpers.AspNetCore.DataAnnotations;
@@ -43,6 +44,7 @@ public class PeopleController : ControllerBase
         return response;
     }
 
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(typeof(Person), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]

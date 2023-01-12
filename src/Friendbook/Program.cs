@@ -3,6 +3,7 @@ using System.Net.Mime;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Friendbook.Authentication;
 using Friendbook.BusinessLayer;
 using Friendbook.BusinessLayer.Profiles;
 using Friendbook.BusinessLayer.Resources;
@@ -12,6 +13,8 @@ using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.WebUtilities;
 using OperationResults.AspNetCore;
+using SimpleAuthentication;
+using SimpleAuthentication.BasicAuthentication;
 using TinyHelpers.AspNetCore.Extensions;
 using TinyHelpers.AspNetCore.Swagger;
 
@@ -31,6 +34,9 @@ builder.Services.AddApplicationDbContext(options =>
     options.ConnectionString = builder.Configuration.GetConnectionString("SqlConnection");
 });
 
+builder.Services.AddSimpleAuthentication(builder.Configuration);
+builder.Services.AddTransient<IBasicAuthenticationValidator, UserValidator>();
+
 builder.Services.AddAutoMapper(typeof(PersonProfile).Assembly);
 builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
 
@@ -38,9 +44,10 @@ builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyCo
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddDateOnlyTimeOnly();
     options.AddDefaultResponse();
     options.AddAcceptLanguageHeader();
+
+    options.AddSimpleAuthentication(builder.Configuration);
 })
 .AddFluentValidationRulesToSwagger(options =>
 {
