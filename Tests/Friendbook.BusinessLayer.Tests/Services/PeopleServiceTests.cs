@@ -18,6 +18,7 @@ public class PeopleServiceTests
     private readonly IHost host;
     private readonly Mock<IUserService> userService = new Mock<IUserService>();
     private readonly Mock<IPeopleService> peopleService = new Mock<IPeopleService>();
+    private readonly string _databaseName = Guid.NewGuid().ToString();
 
     public PeopleServiceTests()
     {
@@ -39,7 +40,7 @@ public class PeopleServiceTests
                   services.AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
                   services.AddDbContext<IDbContext, ApplicationDbContext>(options =>
                   {
-                      options.UseInMemoryDatabase(Guid.NewGuid().ToString());
+                      options.UseInMemoryDatabase(_databaseName);
                   });
                   services.AddScoped(_ => userService.Object);
                   services.AddScoped<IPeopleService, PeopleService>();
