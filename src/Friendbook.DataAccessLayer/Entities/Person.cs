@@ -10,6 +10,8 @@ public class Person
 
     public string City { get; set; }
 
+    public string SecurityCode { get; set; }
+
     public byte[] Photo { get; set; }
 
     public DateTime CreatedAt { get; set; }

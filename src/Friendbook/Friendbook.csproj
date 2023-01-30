@@ -15,7 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="OperationResultTools.AspNetCore" Version="1.0.24" />
-    <PackageReference Include="SimpleAuthenticationTools" Version="1.0.77" />
+    <PackageReference Include="SimpleAuthenticationTools" Version="1.0.79" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="TinyHelpers.AspNetCore" Version="2.0.10" />
   </ItemGroup>
