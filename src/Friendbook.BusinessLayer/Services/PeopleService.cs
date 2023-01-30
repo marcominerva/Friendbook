@@ -102,6 +102,7 @@ internal class PeopleService : IPeopleService
         }
 
         var dbPerson = mapper.Map<Entities.Person>(request);
+
         dbPerson.CreatedAt = DateTime.UtcNow;
         dbPerson.CreatedBy = userService.GetUserName();
 
