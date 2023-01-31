@@ -80,7 +80,7 @@ if (!app.Environment.IsDevelopment())
             var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
             var error = exceptionHandlerFeature?.Error;
 
-            if (context.RequestServices.GetRequiredService<IProblemDetailsService>() is { } problemDetailsService)
+            if (context.RequestServices.GetService<IProblemDetailsService>() is { } problemDetailsService)
             {
                 // Write as JSON problem details
                 await problemDetailsService.WriteAsync(new()

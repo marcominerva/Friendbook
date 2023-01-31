@@ -1,18 +1,4 @@
-﻿using System.Linq.Dynamic.Core;
-using System.Linq.Dynamic.Core.Exceptions;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using FluentValidation;
-using Friendbook.BusinessLayer.Resources;
-using Friendbook.BusinessLayer.Services.Interfaces;
-using Friendbook.DataAccessLayer;
-using Friendbook.Shared.Models;
-using Friendbook.Shared.Models.Requests;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using OperationResults;
-using TinyHelpers.Extensions;
-using Entities = Friendbook.DataAccessLayer.Entities;
+﻿using Entities = Friendbook.DataAccessLayer.Entities;
 
 namespace Friendbook.BusinessLayer.Services;
 
@@ -103,6 +89,7 @@ internal class PeopleService : IPeopleService
 
         var dbPerson = mapper.Map<Entities.Person>(request);
 
+        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
         dbPerson.CreatedAt = DateTime.UtcNow;
         dbPerson.CreatedBy = userService.GetUserName();
 
@@ -130,6 +117,8 @@ internal class PeopleService : IPeopleService
         }
 
         mapper.Map(request, dbPerson);
+        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+
         await dbContext.SaveAsync();
 
         return Result.Ok();
