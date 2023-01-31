@@ -10,6 +10,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IPeopleService, PeopleService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<IDateTimeService, DateTimeService>();
+        services.AddScoped<ISecurityService, SecurityService>();
 
         return services;
     }
