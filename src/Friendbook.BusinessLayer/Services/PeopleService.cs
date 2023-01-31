@@ -1,4 +1,18 @@
-﻿using Entities = Friendbook.DataAccessLayer.Entities;
+﻿using System.Linq.Dynamic.Core;
+using System.Linq.Dynamic.Core.Exceptions;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FluentValidation;
+using Friendbook.BusinessLayer.Resources;
+using Friendbook.BusinessLayer.Services.Interfaces;
+using Friendbook.DataAccessLayer;
+using Friendbook.Shared.Models;
+using Friendbook.Shared.Models.Requests;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OperationResults;
+using TinyHelpers.Extensions;
+using Entities = Friendbook.DataAccessLayer.Entities;
 
 namespace Friendbook.BusinessLayer.Services;
 
