@@ -1,9 +1,8 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Dynamic.Core.Exceptions;
-using System.Security.Cryptography;
-using System.Text;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Friendbook.BusinessLayer.Helpers;
 using Friendbook.BusinessLayer.Resources;
 using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
@@ -96,7 +95,7 @@ internal class PeopleService : IPeopleService
 
         var dbPerson = mapper.Map<Entities.Person>(request);
 
-        dbPerson.SecurityCode = GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
         dbPerson.CreatedAt = DateTime.UtcNow;
         dbPerson.CreatedBy = httpContextAccessor.HttpContext.User.Identity?.Name;
 
@@ -117,7 +116,7 @@ internal class PeopleService : IPeopleService
         }
 
         mapper.Map(request, dbPerson);
-        dbPerson.SecurityCode = GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
 
         await dbContext.SaveAsync();
 
@@ -133,15 +132,5 @@ internal class PeopleService : IPeopleService
         }
 
         return Result.Ok();
-    }
-
-    private string GenerateHash(string input)
-    {
-        // https://passwordsgenerator.net/md5-hash-generator/
-        var data = $"{input}-{DateTime.UtcNow.Ticks}";
-        var bytes = Encoding.UTF8.GetBytes(data);
-        var hash = MD5.HashData(bytes);
-
-        return Convert.ToHexString(hash);
     }
 }
