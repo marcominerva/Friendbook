@@ -101,6 +101,7 @@ if (!app.Environment.IsDevelopment())
                     { Length: > 0 } reasonPhrase => reasonPhrase,
                     _ => "An error occurred"
                 };
+
                 await context.Response.WriteAsync(message + "\r\n");
                 await context.Response.WriteAsync($"Request ID: {Activity.Current?.Id ?? context.TraceIdentifier}");
             }
