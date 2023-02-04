@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendbook.BusinessLayer", "src\Friendbook.BusinessLayer\Friendbook.BusinessLayer.csproj", "{1F23D2FC-E518-44AC-9FB1-48FF16FEB859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.BusinessLayer", "src\Friendbook.BusinessLayer\Friendbook.BusinessLayer.csproj", "{1F23D2FC-E518-44AC-9FB1-48FF16FEB859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendbook.DataAccessLayer", "src\Friendbook.DataAccessLayer\Friendbook.DataAccessLayer.csproj", "{C16B8646-9239-4296-96A0-9A282216A242}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.DataAccessLayer", "src\Friendbook.DataAccessLayer\Friendbook.DataAccessLayer.csproj", "{C16B8646-9239-4296-96A0-9A282216A242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendbook.Shared", "src\Friendbook.Shared\Friendbook.Shared.csproj", "{437DA003-1884-4E1B-B498-B38F247A14D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.Shared", "src\Friendbook.Shared\Friendbook.Shared.csproj", "{437DA003-1884-4E1B-B498-B38F247A14D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

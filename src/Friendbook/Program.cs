@@ -88,7 +88,7 @@ if (!app.Environment.IsDevelopment())
                     ProblemDetails =
                     {
                         Status = context.Response.StatusCode,
-                        Title = error?.GetType().FullName ?? "an error occurred while processing your request",
+                        Title = error?.GetType().FullName ?? "An error occurred while processing your request",
                         Detail = error?.Message
                     }
                 });
@@ -115,8 +115,6 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Friendbook API v1");
 });
-
-app.UseAuthorization();
 
 app.MapControllers();
 
