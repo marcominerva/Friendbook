@@ -97,7 +97,7 @@ public class PeopleController : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
     public async Task<IActionResult> SavePhoto(Guid id,
-        [ContentType(MediaTypeNames.Image.Jpeg, ErrorMessageResourceName ="InvalidContentType", ErrorMessageResourceType =typeof(Messages))]
+        [ContentType(MediaTypeNames.Image.Jpeg, ErrorMessageResourceName = "InvalidContentType", ErrorMessageResourceType = typeof(Messages))]
         [Required]
         IFormFile file)
     {
