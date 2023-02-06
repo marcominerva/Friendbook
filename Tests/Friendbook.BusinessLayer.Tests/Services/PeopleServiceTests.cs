@@ -18,6 +18,7 @@ public class PeopleServiceTests
     private readonly IHost host;
     private readonly Mock<IUserService> userService = new Mock<IUserService>();
     private readonly Mock<IPeopleService> peopleService = new Mock<IPeopleService>();
+    private readonly Mock<ISecurityService> securityService = new Mock<ISecurityService>();
     private readonly string _databaseName = Guid.NewGuid().ToString();
 
     public PeopleServiceTests()
@@ -43,6 +44,7 @@ public class PeopleServiceTests
                       options.UseInMemoryDatabase(_databaseName);
                   });
                   services.AddScoped(_ => userService.Object);
+                  services.AddScoped(_ => securityService.Object);
                   services.AddScoped<IPeopleService, PeopleService>();
               })
               .Build();
@@ -63,7 +65,8 @@ public class PeopleServiceTests
             LastName = "Tosato",
             CreatedAt = DateTime.UtcNow,
             CreatedBy = "test",
-            City = "Verona"
+            City = "Verona",
+            SecurityCode = "SEC1234"
         };
         db.Add(person1);
         await db.SaveChangesAsync();
@@ -103,7 +106,8 @@ public class PeopleServiceTests
             LastName = "Tosato",
             CreatedAt = DateTime.UtcNow,
             CreatedBy = "test",
-            City = "Verona"
+            City = "Verona",
+            SecurityCode = "SEC1234"
         };
         db.Add(person1);
         await db.SaveChangesAsync();

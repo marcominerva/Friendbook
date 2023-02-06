@@ -1,6 +1,6 @@
 ﻿namespace Friendbook.BusinessLayer.Services.Interfaces;
 
-internal interface ISecurityService
+public interface ISecurityService
 {
     string GenerateHash(string input);
 }

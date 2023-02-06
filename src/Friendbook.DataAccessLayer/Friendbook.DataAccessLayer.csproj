@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Friendbook.BusinessLayer.Tests" />
+    <InternalsVisibleTo Include="Friendbook.Tests" />
   </ItemGroup>
 
 </Project>
