@@ -22,14 +22,17 @@ internal class PeopleService : IPeopleService
     private readonly IMapper mapper;
     private readonly IUserService userService;
     private readonly IValidator<SavePersonRequest> validator;
+    private readonly ISecurityService securityService;
     private readonly ILogger<PeopleService> logger;
 
-    public PeopleService(IDbContext dbContext, IMapper mapper, IUserService userService, IValidator<SavePersonRequest> validator, ILogger<PeopleService> logger)
+    public PeopleService(IDbContext dbContext, IMapper mapper, IUserService userService, IValidator<SavePersonRequest> validator, ISecurityService securityService,
+        ILogger<PeopleService> logger)
     {
         this.dbContext = dbContext;
         this.mapper = mapper;
         this.userService = userService;
         this.validator = validator;
+        this.securityService = securityService;
         this.logger = logger;
     }
 
@@ -102,6 +105,8 @@ internal class PeopleService : IPeopleService
         }
 
         var dbPerson = mapper.Map<Entities.Person>(request);
+
+        dbPerson.SecurityCode = securityService.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
         dbPerson.CreatedAt = DateTime.UtcNow;
         dbPerson.CreatedBy = userService.GetUserName();
 
@@ -129,6 +134,8 @@ internal class PeopleService : IPeopleService
         }
 
         mapper.Map(request, dbPerson);
+        dbPerson.SecurityCode = securityService.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+
         await dbContext.SaveAsync();
 
         return Result.Ok();

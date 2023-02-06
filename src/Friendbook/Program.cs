@@ -80,7 +80,7 @@ if (!app.Environment.IsDevelopment())
             var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
             var error = exceptionHandlerFeature?.Error;
 
-            if (context.RequestServices.GetRequiredService<IProblemDetailsService>() is { } problemDetailsService)
+            if (context.RequestServices.GetService<IProblemDetailsService>() is { } problemDetailsService)
             {
                 // Write as JSON problem details
                 await problemDetailsService.WriteAsync(new()
@@ -90,7 +90,7 @@ if (!app.Environment.IsDevelopment())
                     ProblemDetails =
                     {
                         Status = context.Response.StatusCode,
-                        Title = error?.GetType().FullName ?? "an error occurred while processing your request",
+                        Title = error?.GetType().FullName ?? "An error occurred while processing your request",
                         Detail = error?.Message
                     }
                 });
@@ -103,6 +103,7 @@ if (!app.Environment.IsDevelopment())
                     { Length: > 0 } reasonPhrase => reasonPhrase,
                     _ => "An error occurred"
                 };
+
                 await context.Response.WriteAsync(message + "\r\n");
                 await context.Response.WriteAsync($"Request ID: {Activity.Current?.Id ?? context.TraceIdentifier}");
             }
@@ -116,8 +117,6 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Friendbook API v1");
 });
-
-app.UseAuthorization();
 
 app.MapControllers();
 
