@@ -2,13 +2,12 @@
 using System.Linq.Dynamic.Core.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Friendbook.BusinessLayer.Helpers;
+using FluentValidation;
 using Friendbook.BusinessLayer.Resources;
 using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
 using Friendbook.Shared.Models;
 using Friendbook.Shared.Models.Requests;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OperationResults;
@@ -21,14 +20,19 @@ internal class PeopleService : IPeopleService
 {
     private readonly IDbContext dbContext;
     private readonly IMapper mapper;
-    private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly IUserService userService;
+    private readonly IValidator<SavePersonRequest> validator;
+    private readonly ISecurityService securityService;
     private readonly ILogger<PeopleService> logger;
 
-    public PeopleService(IDbContext dbContext, IMapper mapper, IHttpContextAccessor httpContextAccessor, ILogger<PeopleService> logger)
+    public PeopleService(IDbContext dbContext, IMapper mapper, IUserService userService, IValidator<SavePersonRequest> validator, ISecurityService securityService,
+        ILogger<PeopleService> logger)
     {
         this.dbContext = dbContext;
         this.mapper = mapper;
-        this.httpContextAccessor = httpContextAccessor;
+        this.userService = userService;
+        this.validator = validator;
+        this.securityService = securityService;
         this.logger = logger;
     }
 
@@ -78,6 +82,13 @@ internal class PeopleService : IPeopleService
 
     public async Task<Result<Person>> InsertAsync(SavePersonRequest request)
     {
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            var validationErrors = validationResult.Errors.Select(e => new ValidationError(e.PropertyName, e.ErrorMessage));
+            return Result.Fail(FailureReasons.ClientError, validationErrors);
+        }
+
         var samePersonExists = await dbContext.GetData<Entities.Person>()
             .AnyAsync(p => p.FirstName == request.FirstName && p.LastName == request.LastName
             && p.CreatedAt.AddMinutes(1) > DateTime.UtcNow);
@@ -95,9 +106,9 @@ internal class PeopleService : IPeopleService
 
         var dbPerson = mapper.Map<Entities.Person>(request);
 
-        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+        dbPerson.SecurityCode = securityService.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
         dbPerson.CreatedAt = DateTime.UtcNow;
-        dbPerson.CreatedBy = httpContextAccessor.HttpContext.User.Identity?.Name;
+        dbPerson.CreatedBy = userService.GetUserName();
 
         dbContext.Insert(dbPerson);
 
@@ -109,6 +120,13 @@ internal class PeopleService : IPeopleService
 
     public async Task<Result> UpdateAsync(Guid id, SavePersonRequest request)
     {
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            var validationErrors = validationResult.Errors.Select(e => new ValidationError(e.PropertyName, e.ErrorMessage));
+            return Result.Fail(FailureReasons.ClientError, validationErrors);
+        }
+
         var dbPerson = await dbContext.GetData<Entities.Person>(trackingChanges: true).FirstOrDefaultAsync(p => p.Id == id);
         if (dbPerson is null)
         {
@@ -116,7 +134,7 @@ internal class PeopleService : IPeopleService
         }
 
         mapper.Map(request, dbPerson);
-        dbPerson.SecurityCode = Utils.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
+        dbPerson.SecurityCode = securityService.GenerateHash($"{dbPerson.FirstName}{dbPerson.LastName}");
 
         await dbContext.SaveAsync();
 
