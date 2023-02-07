@@ -23,7 +23,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
+  <ItemGroup>
+     <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
+  </ItemGroup>
+    
   <ItemGroup>
     <ProjectReference Include="..\..\src\Friendbook\Friendbook.csproj" />
   </ItemGroup>
