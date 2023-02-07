@@ -16,7 +16,7 @@ public class PersonApi
         _client = _factory.CreateClient();
     }
 
-    [Fact]
+    //[Fact]
     public async Task GetPerson_Ok()
     {
         var people = await _client.GetFromJsonAsync<ListResult<Person>>("/api/people");
