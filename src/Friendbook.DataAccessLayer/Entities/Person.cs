@@ -1,5 +1,8 @@
-﻿namespace Friendbook.DataAccessLayer.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Friendbook.DataAccessLayer.Entities;
+
+[ExcludeFromCodeCoverage]
 public class Person
 {
     public Guid Id { get; set; }
