@@ -18,9 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.Shared", "src\Fr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D570616E-B4CD-428A-8BCE-FC459058B682}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.BusinessLayer.Tests", "Tests\Friendbook.BusinessLayer.Tests\Friendbook.BusinessLayer.Tests.csproj", "{0123A5D3-63DD-448E-8865-CB564A0924E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendbook.BusinessLayer.Tests", "tests\Friendbook.BusinessLayer.Tests\Friendbook.BusinessLayer.Tests.csproj", "{0123A5D3-63DD-448E-8865-CB564A0924E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendbook.Tests", "Tests\Friendbook.Tests\Friendbook.Tests.csproj", "{ECC317CD-ED1B-4D40-B2FD-81C35E32E4E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendbook.Tests", "tests\Friendbook.Tests\Friendbook.Tests.csproj", "{ECC317CD-ED1B-4D40-B2FD-81C35E32E4E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
