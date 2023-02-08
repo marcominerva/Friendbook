@@ -2,12 +2,13 @@ using System.Diagnostics;
 using System.Net.Mime;
 using System.Text.Json.Serialization;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Friendbook.Authentication;
 using Friendbook.BusinessLayer;
 using Friendbook.BusinessLayer.Profiles;
 using Friendbook.BusinessLayer.Resources;
+using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
+using Friendbook.Services;
 using Friendbook.Validations;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
@@ -36,9 +37,10 @@ builder.Services.AddApplicationDbContext(options =>
 
 builder.Services.AddSimpleAuthentication(builder.Configuration);
 builder.Services.AddTransient<IBasicAuthenticationValidator, UserValidator>();
+builder.Services.AddScoped<IUserService, HttpUserService>();
 
 builder.Services.AddAutoMapper(typeof(PersonProfile).Assembly);
-builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SavePersonRequestValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

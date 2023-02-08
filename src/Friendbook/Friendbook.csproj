@@ -24,4 +24,8 @@
         <ProjectReference Include="..\Friendbook.BusinessLayer\Friendbook.BusinessLayer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Friendbook.Tests" />
+    </ItemGroup>
+
 </Project>
