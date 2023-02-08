@@ -9,8 +9,9 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
     </ItemGroup>
 
-    <ItemGroup>
-        <InternalsVisibleTo Include="Friendbook.Tests" />
-    </ItemGroup>
-    
+  <ItemGroup>
+    <InternalsVisibleTo Include="Friendbook.BusinessLayer.Tests" />
+    <InternalsVisibleTo Include="Friendbook.Tests" />
+  </ItemGroup>
+
 </Project>
