@@ -1,6 +1,6 @@
 ﻿using Friendbook.BusinessLayer.Services.Interfaces;
 
-namespace Friendbook.Service;
+namespace Friendbook.Services;
 
 public class HttpUserService : IUserService
 {

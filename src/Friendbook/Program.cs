@@ -8,7 +8,7 @@ using Friendbook.BusinessLayer.Profiles;
 using Friendbook.BusinessLayer.Resources;
 using Friendbook.BusinessLayer.Services.Interfaces;
 using Friendbook.DataAccessLayer;
-using Friendbook.Service;
+using Friendbook.Services;
 using Friendbook.Validations;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
